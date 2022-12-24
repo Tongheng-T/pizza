@@ -21,8 +21,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('frontpage');
+Route::get('/pizza/{id}', [App\Http\Controllers\FrontendController::class, 'show'])->name('pizza.show');
+Route::post('/order/store', [App\Http\Controllers\FrontendController::class, 'store'])->name('order.store');
 
-Route::group(['middleware'=>'auth','admin'],function(){
+Route::group(['prefix'=>'admin','middleware'=>['auth','admin']],function(){
 
     Route::get('/pizza', [App\Http\Controllers\PizzaController::class, 'index'])->name('pizza.index');
     Route::get('/pizza/create', [App\Http\Controllers\PizzaController::class, 'create'])->name('pizza.create');
